@@ -26,23 +26,26 @@ class Node {
     this.next = null;
   }
 }
-// probably need a way to create linkedList without initial value
-// add method to detect if empty
+
 class LinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
     this.count = 0;
   }
+
   size = () => {
     return this.count;
   }
+
   peekHead = () => {
     return this.head;
   }
+
   peekTail = () => {
     return this.tail;
   }
+
   insertHead = (item) => {
     let newNode = new Node(item);
     if(this.count === 0) {
@@ -56,8 +59,9 @@ class LinkedList {
     this.count += 1;
     return this.count;
   }
+
   // enqueue, insert at back for queues
-  insertTail = (item) => {
+  push = (item) => {
     if(this.count === 0) return insertHead(item);
 
     let newNode = new Node(item);
@@ -66,10 +70,18 @@ class LinkedList {
     ++this.count;
     return this.count;
   }
-  // remove from back
+
+  // remove node from back of list
   pop = () => {
-    if(!this.tail) return;
+    // using length as counter would guard against lops in linked list
     let current = this.head;
+    if(!this.tail) return;
+    if(this.length === 1) {
+      this.head = null;
+      this.tail = null;
+      --this.length;
+      return current;
+    }
     while(current){
       if(!current.next.next){
         let popped = current.next;
@@ -81,6 +93,36 @@ class LinkedList {
       current = current.next;
     }
   }
+
+  //find node at index, return node
+  get(index) {
+    if(index < 0 || index >= this.length) {
+      return 'Invalid Index';
+    }
+    let counter = index;
+    let current = this.head;
+    while (counter) {
+      counter--;
+      current = current.next;
+    }
+    return current;
+  }
+
+  // find node at index, alter node value to new value
+  set(index, newVal) {
+    if(index < 0 || index >= this.length) {
+      return 'Invalid Index';
+    }
+    let counter = index;
+    let current = this.head;
+    while (counter) {
+      counter--;
+      current = current.next;
+    }
+    current.val = newVal;
+    return current.val;
+  }
+
   // remove from top, for queues and stacks
   shift = () => {
     if(this.count === 0){
@@ -93,18 +135,16 @@ class LinkedList {
     shifted.next = null;
     return shifted;
   }
+
+  // print nodes as statement of node values and pointers
   print() {
-    let arr = [];
+    let statement = ``;
     let current = this.head;
-
-    if(this.count === 0) return "NULL";
-
     while(current){
-      arr.push(current.val);
+      statement += `${current.val} -> `;
       current = current.next;
     }
-
-    return arr.join(' -> ');
+    return statement + `NULL length: ${this.count}`;
   }
 
 }
@@ -117,7 +157,7 @@ myList.insertHead(10);
 myList.insertHead(2);
 myList.insertHead(12);
 console.log(myList.print(), myList.peekHead(), myList.peekTail())
-myList.insertTail(45);
-myList.insertTail(33);
-myList.insertTail(44);
-console.log(myList.pop(), myList.print(), myList.peekHead(), myList.peekTail())
+myList.push(45);
+myList.push(33);
+myList.push(44);
+console.log(myList.set(3, 99), myList.print(), myList.peekHead(), myList.peekTail(), )
