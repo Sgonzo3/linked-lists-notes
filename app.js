@@ -147,6 +147,52 @@ class LinkedList {
     return statement + `NULL length: ${this.count}`;
   }
 
+  // reverses order of each node in LinkedList, resets head and tail
+  reverseLinkedList() {
+    if(!this.head || !this.head.next) return this.head;
+
+    let current = this.head;
+    let temp = null;
+    let prev = null;
+    let tailIsSet = false;
+
+    while(current){
+      // sets tail to first node in reversal loop
+      if(!tailIsSet){
+        this.tail = current;
+        tailIsSet = true;
+      }
+      //holds the initial pointer to next node
+      temp = current.next;
+      //sets current next pointer to the last node, or initial null
+      current.next = prev;
+
+      // move prev pointer to the current node
+      prev = current;
+      // move current pointer to initial next node
+      current = temp;
+    }
+    // set new head
+    this.head = prev;
+    return this.head;
+  }
+
+  findCycle() {
+    if(!this.head || !this.head.next) return false;
+
+    let fast = this.head;
+    let slow = this.head;
+
+    while(fast && fast !== slow) {
+      fast = fast.next;
+      fast = fast.next;
+      slow = slow.next;
+    }
+    if(fast === slow) return true;
+    return false;
+  }
+
+
 }
 
 // Tests
@@ -161,3 +207,7 @@ myList.push(45);
 myList.push(33);
 myList.push(44);
 console.log(myList.set(3, 99), myList.print(), myList.peekHead(), myList.peekTail(), )
+console.log(myList.reverseLinkedList(), myList.peekTail())
+console.log(myList.print())
+console.log(myList.reverseLinkedList(), myList.peekTail())
+console.log(myList.print())
