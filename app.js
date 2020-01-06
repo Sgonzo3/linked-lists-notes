@@ -192,7 +192,50 @@ class LinkedList {
     return false;
   }
 
+  //remove node at position
+  // removeNodeAt(index){
+  //   let current = this.get(index);
+  //   if(!current.next) {
+  //     return this.pop();
+  //   } else if(current === this.head) {
+  //     return this.shift();
+  //   } else {
+  //     current.next = current.next.next;
+  //     this.length--;
+  //   }
+  // }
 
+  // removeDuplicates(){
+  //   // hash might be better
+  //   let storage = {};
+  //   let current = this.head;
+  //   while(current){
+  //     storage[current.val] = true;
+  //     current = current.next;
+  //   }
+  // }
+
+  // find  nTH node from the back
+  findFromBack(index) {
+    if(index < 0 || index >= this.length) {
+      return 'Invalid Index';
+    }
+
+    // assumes no length or tail property
+    let fast = this.head;
+    let slow = this.head;
+    let count = index;
+
+    while(count){
+      fast = fast.next;
+      count--;
+    }
+    while(fast){
+      fast = fast.next;
+      slow = slow.next;
+    }
+    return slow;
+  }
 }
 
 // Tests
@@ -210,4 +253,4 @@ console.log(myList.set(3, 99), myList.print(), myList.peekHead(), myList.peekTai
 console.log(myList.reverseLinkedList(), myList.peekTail())
 console.log(myList.print())
 console.log(myList.reverseLinkedList(), myList.peekTail())
-console.log(myList.print())
+console.log(myList.print(), myList.findFromBack(5))
