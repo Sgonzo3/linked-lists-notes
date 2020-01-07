@@ -193,27 +193,50 @@ class LinkedList {
   }
 
   //remove node at position
-  // removeNodeAt(index){
-  //   let current = this.get(index);
-  //   if(!current.next) {
-  //     return this.pop();
-  //   } else if(current === this.head) {
-  //     return this.shift();
-  //   } else {
-  //     current.next = current.next.next;
-  //     this.length--;
-  //   }
-  // }
+  removeNodeAt(index){
+    // if no peekHead
+    // if index greater than length
+    // if index === 0
+    // if index < 0
+    let counter = index - 1;
+    let current = this.head;
+    while(counter--){
+      current = current.next;
+    } // now at node before deletion
+    let temp = current.next;
+    current.next = current.next.next;
+    temp.next = null;
+    return temp;
+    // if(!current.next) {
+    //   return this.pop();
+    // } else if(current === this.head) {
+    //   return this.shift();
+    // } else {
+    //   current.next = current.next.next;
+    //   this.length--;
+    // }
+  }
 
-  // removeDuplicates(){
-  //   // hash might be better
-  //   let storage = {};
-  //   let current = this.head;
-  //   while(current){
-  //     storage[current.val] = true;
-  //     current = current.next;
-  //   }
-  // }
+  removeDuplicates(){
+    // edge cases
+    let set = new Set([]);
+    let current = this.head;
+    let prev = null;
+    let temp = null;
+
+    while(current){
+      temp = current.next;
+      if(!set.has(current.val)){
+        set.add(current.val);
+      } else {
+        prev.next = current.next
+        current.next = null;
+        this.length--;
+      }
+      prev = current;
+      current = temp;
+    }
+  }
 
   // find  nTH node from the back
   findFromBack(index) {
