@@ -18,8 +18,13 @@
 // Search	0(n)	0(n)
 // Insert	0(1)	0(1)
 // Delete	0(1)	0(1)
-
-
+const startButton = document.querySelector('.start');
+console.log(startButton)
+startButton.addEventListener('click', () => {
+  let userList = new LinkedList(22);
+  userList.print();
+  return userList.printHTML();
+});
 class Node {
   constructor(item) {
     this.val = item;
@@ -145,6 +150,17 @@ class LinkedList {
       current = current.next;
     }
     return statement + `NULL length: ${this.count}`;
+  }
+
+  // print nodes as statement of node values and pointers
+  printHTML() {
+    let statement = ``;
+    let current = this.head;
+    while(current){
+      statement += `${current.val} -> `;
+      current = current.next;
+    }
+    return document.body.append(`<div><span>${statement + `NULL length: ${this.count}`}</span></div>`);
   }
 
   // reverses order of each node in LinkedList, resets head and tail
@@ -277,3 +293,4 @@ console.log(myList.reverseLinkedList(), myList.peekTail())
 console.log(myList.print())
 console.log(myList.reverseLinkedList(), myList.peekTail())
 console.log(myList.print(), myList.findFromBack(5))
+
